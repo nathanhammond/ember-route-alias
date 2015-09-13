@@ -1,3 +1,142 @@
-<h2 id="title">Welcome to Ember</h2>
+<h1>Ember Route Alias</h1>
 
-{{outlet}}
+<ul>
+  <li>{{#link-to 'application'}}application{{/link-to}}
+    <ul>
+      <li>{{#link-to 'index'}}index{{/link-to}}</li>
+      <li>{{#link-to 'one'}}one{{/link-to}}
+        <ul>
+          <li>{{#link-to 'one.index'}}one.index{{/link-to}}</li>
+          <li>{{#link-to 'one.a'}}one.a{{/link-to}}
+            <ul>
+              <li>{{#link-to 'one.a.index'}}one.a.index{{/link-to}}</li>
+              <li>{{#link-to 'one.a.i'}}one.a.i{{/link-to}}</li>
+              <li>{{#link-to 'one.a.ii'}}one.a.ii{{/link-to}}</li>
+              <li>{{#link-to 'one.a.iii'}}one.a.iii{{/link-to}}</li>
+              <li>{{#link-to 'one.a.alias-i'}}one.a.alias-i{{/link-to}}</li>
+            </ul>
+          </li>
+          <li>{{#link-to 'one.b'}}one.b{{/link-to}}</li>
+          <li>{{#link-to 'one.c'}}one.c{{/link-to}}</li>
+        </ul>
+      </li>
+      <li>{{#link-to 'two'}}two{{/link-to}}</li>
+      <li>{{#link-to 'three'}}three{{/link-to}}</li>
+    </ul>
+  </li>
+</ul>
+
+<ul>
+  <li>{{#link-to 'application'}}application{{/link-to}}
+    <ul>
+      <li>{{#link-to 'index'}}index{{/link-to}}</li>
+      <li>{{#link-to 'alias-one'}}alias-one{{/link-to}}
+        <ul>
+          <li>{{#link-to 'alias-one.index'}}alias-one.index{{/link-to}}</li>
+          <li>{{#link-to 'alias-one.a'}}alias-one.a{{/link-to}}
+            <ul>
+              <li>{{#link-to 'alias-one.a.index'}}alias-one.a.index{{/link-to}}</li>
+              <li>{{#link-to 'alias-one.a.i'}}alias-one.a.i{{/link-to}}</li>
+              <li>{{#link-to 'alias-one.a.ii'}}alias-one.a.ii{{/link-to}}</li>
+              <li>{{#link-to 'alias-one.a.iii'}}alias-one.a.iii{{/link-to}}</li>
+              <li>{{#link-to 'alias-one.a.alias-i'}}alias-one.a.alias-i{{/link-to}}</li>
+            </ul>
+          </li>
+          <li>{{#link-to 'alias-one.b'}}alias-one.b{{/link-to}}</li>
+          <li>{{#link-to 'alias-one.c'}}alias-one.c{{/link-to}}</li>
+        </ul>
+      </li>
+      <li>{{#link-to 'two'}}two{{/link-to}}</li>
+      <li>{{#link-to 'three'}}three{{/link-to}}</li>
+    </ul>
+  </li>
+</ul>
+
+<ul>
+  <li>{{#link-to 'application'}}application{{/link-to}}
+    <ul>
+      <li>{{#link-to 'index'}}index{{/link-to}}</li>
+      <li>{{#link-to 'one'}}one{{/link-to}}
+        <ul>
+          <li>{{#link-to 'one.index'}}one.index{{/link-to}}</li>
+          <li>{{#link-to 'one.alias-a'}}one.alias-a{{/link-to}}
+            <ul>
+              <li>{{#link-to 'one.alias-a.index'}}one.alias-a.index{{/link-to}}</li>
+              <li>{{#link-to 'one.alias-a.i'}}one.alias-a.i{{/link-to}}</li>
+              <li>{{#link-to 'one.alias-a.ii'}}one.alias-a.ii{{/link-to}}</li>
+              <li>{{#link-to 'one.alias-a.iii'}}one.alias-a.iii{{/link-to}}</li>
+              <li>{{#link-to 'one.alias-a.alias-i'}}one.alias-a.alias-i{{/link-to}}</li>
+            </ul>
+          </li>
+          <li>{{#link-to 'one.b'}}one.b{{/link-to}}</li>
+          <li>{{#link-to 'one.c'}}one.c{{/link-to}}</li>
+        </ul>
+      </li>
+      <li>{{#link-to 'two'}}two{{/link-to}}</li>
+      <li>{{#link-to 'three'}}three{{/link-to}}</li>
+    </ul>
+  </li>
+</ul>
+
+<ul>
+  <li>{{#link-to 'application'}}application{{/link-to}}
+    <ul>
+      <li>{{#link-to 'index'}}index{{/link-to}}</li>
+      <li>{{#link-to 'alias-one'}}alias-one{{/link-to}}
+        <ul>
+          <li>{{#link-to 'alias-one.index'}}alias-one.index{{/link-to}}</li>
+          <li>{{#link-to 'alias-one.alias-a'}}alias-one.alias-a{{/link-to}}
+            <ul>
+              <li>{{#link-to 'alias-one.alias-a.index'}}alias-one.alias-a.index{{/link-to}}</li>
+              <li>{{#link-to 'alias-one.alias-a.i'}}alias-one.alias-a.i{{/link-to}}</li>
+              <li>{{#link-to 'alias-one.alias-a.ii'}}alias-one.alias-a.ii{{/link-to}}</li>
+              <li>{{#link-to 'alias-one.alias-a.iii'}}alias-one.alias-a.iii{{/link-to}}</li>
+              <li>{{#link-to 'alias-one.alias-a.alias-i'}}alias-one.alias-a.alias-i{{/link-to}}</li>
+            </ul>
+          </li>
+          <li>{{#link-to 'alias-one.b'}}alias-one.b{{/link-to}}</li>
+          <li>{{#link-to 'alias-one.c'}}alias-one.c{{/link-to}}</li>
+        </ul>
+      </li>
+      <li>{{#link-to 'two'}}two{{/link-to}}</li>
+      <li>{{#link-to 'three'}}three{{/link-to}}</li>
+    </ul>
+  </li>
+</ul>
+
+<ul>
+  <li>{{#link-to 'application'}}application{{/link-to}}
+    <ul>
+      <li>{{#link-to 'index'}}index{{/link-to}}</li>
+      <li>{{#link-to 'not-one'}}not-one{{/link-to}}
+        <ul>
+          <li>{{#link-to 'not-one.index'}}not-one.index{{/link-to}}</li>
+          <li>{{#link-to 'not-one.a'}}not-one.a{{/link-to}}
+            <ul>
+              <li>{{#link-to 'not-one.a.index'}}not-one.a.index{{/link-to}}</li>
+              <li>{{#link-to 'not-one.a.i'}}not-one.a.i{{/link-to}}</li>
+              <li>{{#link-to 'not-one.a.ii'}}not-one.a.ii{{/link-to}}</li>
+              <li>{{#link-to 'not-one.a.iii'}}not-one.a.iii{{/link-to}}</li>
+              <li>{{#link-to 'not-one.a.alias-i'}}not-one.a.alias-i{{/link-to}}</li>
+            </ul>
+          </li>
+          <li>{{#link-to 'not-one.b'}}not-one.b{{/link-to}}</li>
+          <li>{{#link-to 'not-one.c'}}not-one.c{{/link-to}}</li>
+        </ul>
+      </li>
+      <li>{{#link-to 'two'}}two{{/link-to}}</li>
+      <li>{{#link-to 'three'}}three{{/link-to}}</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<dl>
+  <dt>originalRoute</dt>
+  <dd>application</dd>
+  <dt>contextRoute</dt>
+  <dd>{{contextRoute}}</dd>
+</dl>
+
+<div>{{outlet}}</div>

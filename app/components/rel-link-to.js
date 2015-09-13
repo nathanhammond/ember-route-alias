@@ -1,0 +1,1 @@
+export { default } from 'ember-route-alias/components/rel-link-to';

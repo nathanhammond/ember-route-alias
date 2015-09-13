@@ -1,0 +1,17 @@
+h1 { margin: .5em 0; }
+dt, dd { display: inline; margin: 0; }
+dt { font-weight: bold; }
+dt::after { content: ':';}
+
+div.ember-view > div { margin-left: 0; }
+div.ember-view > dl::before { content:''; }
+div.ember-view > ul { margin: 0 0 1em; display: inline-block; }
+div.ember-view > ul + ul { border-left: 1px solid black; margin-left: 1em; padding-left: 2em; }
+div.ember-view > ul ul { margin-left: 0; }
+
+dl ~ div { margin-left: 1em; }
+div dl::before { content:'└'; }
+
+ul { padding-left: 1em; }
+
+div > ul { margin-left: 1.5em; }

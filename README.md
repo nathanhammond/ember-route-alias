@@ -1,14 +1,60 @@
-# Ember-route-alias
+# ember-route-alias
 
-This README outlines the details of collaborating on this Ember addon.
+This Ember Addon makes it easy to create multiple paths to the same route. By default it uses the same set of assets as the original route, but individual assets for each route can be overidden.
 
-## Installation
+It also includes a simple `{{#rel-link-to}}` helper to make template reuse easier.
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+**Warning:** This addon monkey-patches the private `Ember.RouterDSL#route` method. As a result this addon can easily be broken by changes in Ember core. It is, however, used by a major product in the Ember ecosystem and will be kept up-to-date as best as possible.
 
-## Running
+## Usage
+
+`ember install ember-route-alias`
+
+In `app.js`:
+```javascript
+import RouteAliasResolver from 'ember-route-alias/mixins/route-alias-resolver';
+
+App = Ember.Application.extend({
+  /* ... */
+  Resolver: Resolver.extend(RouteAliasResolver)
+});
+```
+
+In `router.js`:
+```javascript
+Router.map(function() {
+  this.route('one', function() {
+    this.route('a', function () {
+      this.route('i', function() {});
+      this.route('ii');
+      this.route('iii');
+
+      this.alias('alias-i', '/alias-i', 'i');
+    });
+    this.route('b');
+    this.route('c');
+
+    this.alias('alias-a', '/alias-a', 'a');
+  });
+  this.route('two');
+  this.route('three');
+
+  this.alias('alias-one', '/alias-one', 'one');
+  this.alias('not-one', '/not-one', 'alias-one');
+});
+```
+
+Electively you may add assets for any of the aliased routes by their name and it will load those assets instead. (The custom resolver is placed last in the queue.) For example, in `templates/alias-one.hbs`:
+
+```handlebars
+This template will be loaded instead of <pre>templates/one.hbs</pre>.
+
+{{outlet}}
+```
+
+## Running The Sample Application
+
+The included sample application contains complete usage examples.
 
 * `ember server`
 * Visit your app at http://localhost:4200.
@@ -17,9 +63,3 @@ This README outlines the details of collaborating on this Ember addon.
 
 * `ember test`
 * `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).

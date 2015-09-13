@@ -1,0 +1,21 @@
+<dl>
+  <dt>originalRoute</dt>
+  <dd>one</dd>
+  <dt>contextRoute</dt>
+  <dd>{{contextRoute}}</dd>
+</dl>
+
+<ul>
+  <li>{{#rel-link-to '' base=contextRoute}}''{{/rel-link-to}}
+    <ul>
+      <li>{{#rel-link-to 'a' base=contextRoute}}a{{/rel-link-to}}</li>
+      <li>{{#rel-link-to 'b' base=contextRoute}}b{{/rel-link-to}}</li>
+      <li>{{#rel-link-to 'c' base=contextRoute}}c{{/rel-link-to}}</li>
+    </ul>
+  </li>
+  <li>{{#rel-link-to '../one' base=contextRoute}}../one{{/rel-link-to}}</li>
+  <li>{{#rel-link-to '../two' base=contextRoute}}../two{{/rel-link-to}}</li>
+  <li>{{#rel-link-to '../three' base=contextRoute}}../three{{/rel-link-to}}</li>
+</ul>
+
+<div>{{outlet}}</div>
