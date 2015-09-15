@@ -57,14 +57,21 @@ This template will be loaded instead of <pre>templates/one.hbs</pre>.
 {{outlet}}
 ```
 
-## Running The Sample Application
+## Running the sample application
 
 The included sample application contains complete usage examples.
 
 * `ember server`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
+* Also available via GitHub Pages [http://nathanhammond.github.io/ember-route-alias/](http://nathanhammond.github.io/ember-route-alias/)
 
 ## Running Tests
 
-* `ember test`
-* `ember test --server`
+* `npm run test`
+
+## Pushing an updated sample app
+
+```sh
+ember github-pages:commit --message "First publish." --environment=gh-pages`
+git push
+```
