@@ -1,6 +1,11 @@
 # ember-route-alias
 
-This Ember Addon makes it easy to create multiple paths to the same route. By default it uses the same set of assets as the original route, but individual assets for each route can be overidden.
+[![Build Status](https://travis-ci.org/nathanhammond/ember-route-alias.svg)](https://travis-ci.org/nathanhammond/ember-route-alias)
+[![npm version](https://badge.fury.io/js/ember-route-alias.svg)](http://badge.fury.io/js/ember-route-alias)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-route-alias.svg)](http://emberobserver.com/addons/ember-route-alias)
+[![Code Climate](https://codeclimate.com/github/nathanhammond/ember-route-alias/badges/gpa.svg)](https://codeclimate.com/github/nathanhammond/ember-route-alias)
+
+This Ember addon makes it easy to create multiple paths to the same route. By default it uses the same set of assets as the original route, but individual assets for each route can be overidden.
 
 It also includes a simple `{{#rel-link-to}}` helper to make template reuse easier.
 
@@ -57,7 +62,7 @@ This template will be loaded instead of <pre>templates/one.hbs</pre>.
 The included sample application contains complete usage examples.
 
 * `ember server`
-* Visit your app at http://localhost:4200.
+* Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ## Running Tests
 
