@@ -15,6 +15,16 @@ export function initialize(application) {
     }
   });
 
+  Ember.Router.reopen({
+    willTransition(a, b, intent) {
+      if (intent.targetName.indexOf('replace-with:') === 0) {
+        let terminal = intent.targetName.substr(13);
+        this.replaceWith(terminal);
+      }
+      this._super.apply(this, arguments);
+    }
+  });
+
   // Save off the original method in scope of the prototype modifications.
   let originalRouteMethod = Ember.RouterDSL.prototype.route;
 
@@ -46,6 +56,10 @@ export function initialize(application) {
       options = {};
     }
 
+    if (options.terminal && typeof options.path !== 'string') {
+      options.path = `/${name}`;
+    }
+
     // Save off a reference to the original arguments in a reachable scope.
     // This is so later calls to `alias` have something to find.
     if (!this.handlers) { this.handlers = {}; }
@@ -74,6 +88,11 @@ export function initialize(application) {
       // Add each of them to the lookup.
       for (let i = originalLength; i < newLength; i++) {
         let intermediate = this.matches[i][1].split('.');
+        if (options.terminal) {
+          if (intermediate[intermediate.length-1] === name) {
+            this.matches[i][1] = 'replace-with:' + options.terminal;
+          }
+        }
         let qualifiedAliasRoute = intermediate.join('/');
         let qualifiedTargetRoute = qualifiedAliasRoute.replace(currentIntercepting.aliasRoute, currentIntercepting.aliasTarget);
 
