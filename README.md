@@ -5,7 +5,9 @@
 [![Ember Observer Score](http://emberobserver.com/badges/ember-route-alias.svg)](http://emberobserver.com/addons/ember-route-alias)
 [![Code Climate](https://codeclimate.com/github/nathanhammond/ember-route-alias/badges/gpa.svg)](https://codeclimate.com/github/nathanhammond/ember-route-alias)
 
-This Ember addon makes it easy to create multiple paths to the same route. By default it uses the same set of assets as the original route, but individual assets for each route can be overidden.
+This Ember addon does two things:
+1. **Makes it easy to create multiple paths to the same route** - By default it uses the same set of assets as the original route, but individual assets for each route can be overidden.
+2. **Enables marking routes as invalid terminal (aka leafmost) routes** - Doing so requires declaring what route should actually be the terminal route.
 
 It also includes a simple `{{#rel-link-to}}` helper to make template reuse easier.
 
@@ -46,6 +48,12 @@ Router.map(function() {
 
   this.alias('alias-one', '/alias-one', 'one');
   this.alias('not-one', '/not-one', 'alias-one');
+
+  this.route('non-terminal', function() {
+    this.route('index', { path: '/', terminal: 'non-terminal.terminal' });
+    this.route('sibling', { terminal: 'non-terminal.terminal' });
+    this.route('terminal');
+  });
 });
 ```
 
