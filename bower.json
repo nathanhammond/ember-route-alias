@@ -1,6 +1,6 @@
 {
   "name": "ember-route-alias",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
     "ember": "2.1.0-beta.4",
     "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",
