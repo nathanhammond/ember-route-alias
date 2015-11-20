@@ -24,6 +24,12 @@ Router.map(function() {
 
   this.alias('alias-one', '/alias-one', 'one');
   this.alias('not-one', '/not-one', 'alias-one');
+
+  this.route('non-terminal', function() {
+    this.route('index', { path: '/', terminal: 'non-terminal.terminal' });
+    this.route('sibling', { terminal: 'non-terminal.terminal' });
+    this.route('terminal');
+  });
 });
 
 export default Router;
