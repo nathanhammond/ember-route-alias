@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 
 var application;
 var originals = {
-  setupController: Ember.Route.proto().setupController,
   route: Ember.RouterDSL.prototype.route
 };
 
@@ -17,7 +16,6 @@ module('Unit | Initializer | route alias', {
   },
   afterEach: function() {
     Ember.run(function() {
-      Ember.Route.proto().setupController = originals.setupController;
       delete Ember.RouterDSL.prototype.alias;
       Ember.RouterDSL.prototype.route = originals.route;
     });
@@ -28,14 +26,25 @@ test('Initializer properly modifies/hooks all objects.', function(assert) {
   RouteAliasInitializer.initialize(application);
 
   var replacements = {
-    setupController: Ember.Route.proto().setupController,
     route: Ember.RouterDSL.prototype.route
   };
 
   assert.ok(application._routeAliasLookup, 'Ensure that the dictionary we use is present.');
-  assert.notEqual(originals.setupController, replacements.setupController, 'Ensure that Route#setupController is replaced.');
   assert.notEqual(originals.route, replacements.route, 'RouterDSL#route has been replaced.');
   assert.ok(Ember.RouterDSL.prototype.route, 'RouterDSL#alias exists.');
+});
+
+test('Route#setupController sets the contextRoute on the controller', function(assert) {
+  RouteAliasInitializer.initialize(application);
+
+  var route = Ember.Route.create({ routeName: 'testy-mctesterton' });
+  var controller = Ember.Controller.create({ });
+
+  assert.notOk(controller.get('contextRoute'), 'contextRoute is empty to start');
+
+  route.setupController(controller);
+
+  assert.equal(controller.get('contextRoute'), 'testy-mctesterton', 'contextRoute is set after setup');
 });
 
 test('RouterDSL assertions work.', function(assert) {
@@ -121,5 +130,4 @@ test('RouterDSL#alias creates the lookup.', function(assert) {
   assert.equal(application._routeAliasLookup['not-one/index'], 'alias-one/index', 'Can alias an alias.');
   assert.equal(application._routeAliasLookup['not-one/a'], 'alias-one/a', 'Can alias an alias.');
   assert.equal(application._routeAliasLookup['not-one/alias-a'], 'not-one/a', 'Can alias an alias.');
-
 });
