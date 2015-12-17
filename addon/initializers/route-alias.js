@@ -1,24 +1,19 @@
 import Ember from 'ember';
 
-export function initialize(application) {
-  // The dictionary we'll be using.
-  application._routeAliasLookup = {};
+/*
+Reopen `Ember.Route` to attach a new property to the controller to make it
+available in all route templates. We only need to do this once as it is a global
+change that is not instance specific.
+*/
+Ember.Route.reopen({
+  setupController(controller) {
+    this._super.apply(this, arguments);
+    controller.set('contextRoute', this.routeName);
+  }
+});
 
-  /*
-  Reopen `Ember.Route` to attach a new property to the controller to make it
-  available in all route templates.
-  */
-  Ember.Route.reopen({
-    setupController(controller) {
-      this._super.apply(this, arguments);
-      controller.set('contextRoute', this.routeName);
-    }
-  });
-
-  // Save off the original method in scope of the prototype modifications.
-  let originalRouteMethod = Ember.RouterDSL.prototype.route;
-
-  // Here is our magic alias function.
+// Sets up our magic alias function.
+function createAlias() {
   Ember.RouterDSL.prototype.alias = function(aliasRoute, aliasPath, aliasTarget) {
     Ember.assert('You must create a route prior to creating an alias.', this.handlers || this.intercepting);
     Ember.assert('The alias target must exist before attempting to alias it.', this.handlers[aliasTarget]);
@@ -31,6 +26,12 @@ export function initialize(application) {
 
     this.route(aliasRoute, options, callback);
   };
+}
+
+// Patches the RouterDSL route function to work with aliases.
+function patchRoute(lookup) {
+  // Save off the original method in scope of the prototype modifications.
+  let originalRouteMethod = Ember.RouterDSL.prototype.route;
 
   // We need to do a few things before and after the original route function.
   Ember.RouterDSL.prototype.route = function(name, options, callback) {
@@ -78,13 +79,13 @@ export function initialize(application) {
         let qualifiedTargetRoute = qualifiedAliasRoute.replace(currentIntercepting.aliasRoute, currentIntercepting.aliasTarget);
 
         if (qualifiedAliasRoute !== qualifiedTargetRoute) {
-          application._routeAliasLookup[qualifiedAliasRoute] = qualifiedTargetRoute;
+          lookup[qualifiedAliasRoute] = qualifiedTargetRoute;
         } else {
           // For index routes we need to try again with the base intercepting object.
           let isIndex = intermediate.pop().indexOf('index') === 0;
           qualifiedTargetRoute = qualifiedAliasRoute.replace(this.intercepting[0].aliasRoute, this.intercepting[0].aliasTarget);
           if (isIndex && qualifiedAliasRoute !== qualifiedTargetRoute) {
-            application._routeAliasLookup[qualifiedAliasRoute] = qualifiedTargetRoute;
+            lookup[qualifiedAliasRoute] = qualifiedTargetRoute;
           }
         }
       }
@@ -93,6 +94,14 @@ export function initialize(application) {
       originalRouteMethod.call(this, name, options, callback);
     }
   };
+}
+
+export function initialize(application) {
+  // The dictionary we'll be using.
+  const lookup = application._routeAliasLookup = {};
+
+  createAlias();
+  patchRoute(lookup);
 }
 
 export default {
