@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import Resolver from 'ember/resolver';
+import Resolver from './resolver';
 import loadInitializers from 'ember/load-initializers';
 import config from './config/environment';
 import RouteAliasResolver from 'ember-route-alias/mixins/route-alias-resolver';
 
-var App;
+let App;
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
