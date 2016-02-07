@@ -96,7 +96,10 @@ function patchRoute(lookup) {
   };
 }
 
-export function initialize(application) {
+export function initialize(container, application) {
+  // Make this work in 1.X and 2.X.
+  application = application || container;
+
   // The dictionary we'll be using.
   const lookup = application._routeAliasLookup = {};
 
