@@ -3,9 +3,6 @@ import RouteAliasInitializer from '../../../initializers/route-alias';
 import { module, test } from 'qunit';
 
 var application;
-var originals = {
-  route: Ember.RouterDSL.prototype.route
-};
 
 module('Unit | Initializer | route alias', {
   beforeEach: function() {
@@ -16,22 +13,9 @@ module('Unit | Initializer | route alias', {
   },
   afterEach: function() {
     Ember.run(function() {
-      delete Ember.RouterDSL.prototype.alias;
-      Ember.RouterDSL.prototype.route = originals.route;
+      application.destroy();
     });
   }
-});
-
-test('Initializer properly modifies/hooks all objects.', function(assert) {
-  RouteAliasInitializer.initialize(application);
-
-  var replacements = {
-    route: Ember.RouterDSL.prototype.route
-  };
-
-  assert.ok(application._routeAliasLookup, 'Ensure that the dictionary we use is present.');
-  assert.notEqual(originals.route, replacements.route, 'RouterDSL#route has been replaced.');
-  assert.ok(Ember.RouterDSL.prototype.route, 'RouterDSL#alias exists.');
 });
 
 test('Route#setupController sets the contextRoute on the controller', function(assert) {
@@ -84,17 +68,20 @@ test('RouterDSL#route saving of scope works as expected.', function(assert) {
 });
 
 test('RouterDSL#route invokes the original prototype.', function(assert) {
-  var spycount = 0;
-  Ember.RouterDSL.prototype.route = function() {
-    spycount++;
-    originals.route.apply(this, arguments);
-  };
-
   RouteAliasInitializer.initialize(application);
   var DSL = new Ember.RouterDSL(null, {});
 
+  let matchCalled = 0;
+  function match() {
+    matchCalled++;
+    return {
+      to() {}
+    };
+  }
+
   DSL.route('index', { path: '/' });
-  assert.equal(spycount, 1, 'Invoking route hits the original prototype.');
+  DSL.generate()(match);
+  assert.equal(matchCalled, 1, 'Patched DSL should still generate correct matches');
 });
 
 test('RouterDSL#alias creates the lookup.', function(assert) {
