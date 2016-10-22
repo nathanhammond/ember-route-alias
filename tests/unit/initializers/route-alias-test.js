@@ -50,7 +50,7 @@ test('Route#setupController sets the contextRoute on the controller', function(a
 test('RouterDSL assertions work.', function(assert) {
   RouteAliasInitializer.initialize(application);
 
-  var DSL = new Ember.RouterDSL();
+  var DSL = new Ember.RouterDSL(null, {});
 
   assert.throws(
     function() { DSL.alias('asdf', '/asdf', 'target'); },
@@ -75,7 +75,7 @@ test('RouterDSL assertions work.', function(assert) {
 
 test('RouterDSL#route saving of scope works as expected.', function(assert) {
   RouteAliasInitializer.initialize(application);
-  var DSL = new Ember.RouterDSL();
+  var DSL = new Ember.RouterDSL(null, {});
   var stub = function() {};
 
   DSL.route('index', { path: '/' }, stub);
@@ -91,7 +91,7 @@ test('RouterDSL#route invokes the original prototype.', function(assert) {
   };
 
   RouteAliasInitializer.initialize(application);
-  var DSL = new Ember.RouterDSL();
+  var DSL = new Ember.RouterDSL(null, {});
 
   DSL.route('index', { path: '/' });
   assert.equal(spycount, 1, 'Invoking route hits the original prototype.');
@@ -100,7 +100,7 @@ test('RouterDSL#route invokes the original prototype.', function(assert) {
 test('RouterDSL#alias creates the lookup.', function(assert) {
   RouteAliasInitializer.initialize(application);
 
-  var DSL = new Ember.RouterDSL();
+  var DSL = new Ember.RouterDSL(null, {});
   assert.notOk(DSL.intercepting, 'Not set as intercepting prior to an alias call.');
 
   DSL.route('index', { path: '/' });
