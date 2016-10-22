@@ -40,13 +40,10 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
   }
 
-  if (environment === 'gh-pages') {
-    ENV.locationType = 'hash';
-    ENV.routerRootURL = '/ember-route-alias';
-  }
-
   if (environment === 'production') {
-
+    ENV.locationType = 'hash';
+    ENV.rootURL = '/ember-route-alias';
+    ENV.routerRootURL = '/ember-route-alias';
   }
 
   return ENV;

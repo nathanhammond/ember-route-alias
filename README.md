@@ -72,6 +72,6 @@ The included sample application contains complete usage examples.
 ## Pushing an updated sample app
 
 ```sh
-ember github-pages:commit --message "First publish." --environment=gh-pages`
-git push
+ember github-pages:commit --message "Update demo app."
+git push origin gh-pages:gh-pages
 ```
