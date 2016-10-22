@@ -96,15 +96,21 @@ function patchRoute(lookup) {
   };
 }
 
+// Routing only happens once.
+const lookup = {};
+
+// Only patch things once for testing.
+let hasRun = false;
 export function initialize() {
-  // Make this work in 1.X and 2.X without deprecation warnings.
+  if (!hasRun) {
+    hasRun = true;
+    createAlias();
+    patchRoute(lookup);
+  }
+
+  // Feed the lookup into the application.
   let application = arguments[1] || arguments[0];
-
-  // The dictionary we'll be using.
-  const lookup = application._routeAliasLookup = {};
-
-  createAlias();
-  patchRoute(lookup);
+  application._routeAliasLookup = lookup;
 }
 
 export default {
