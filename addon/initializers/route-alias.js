@@ -8,7 +8,10 @@ change that is not instance specific.
 Ember.Route.reopen({
   setupController(controller) {
     this._super.apply(this, arguments);
-    controller.set('contextRoute', this.routeName);
+
+    if (!controller.isDestroyed) {
+      controller.set('contextRoute', this.routeName);
+    }
   }
 });
 
