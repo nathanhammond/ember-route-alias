@@ -13,7 +13,7 @@ module('Unit | Initializer | route alias', {
       application = Ember.Application.create();
       application.deferReadiness();
       RouteAliasInitializer.initialize(application);
-      DSL = new Ember.RouterDSL(null, {});
+      DSL = new Ember.RouterDSL('application', {});
     });
   }
 });

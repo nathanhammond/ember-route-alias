@@ -68,13 +68,14 @@ function patchRoute(lookup) {
       };
 
       // Figure out how many routes we created.
-      let originalLength = this.matches.length;
+      let originalLength = [].concat.apply([], this.matches).length;
       originalRouteMethod.call(this, name, options, callback ? interceptingCallback : undefined);
-      let newLength = this.matches.length;
+      let newMatches = [].concat.apply([], this.matches);
+      let newLength = newMatches.length;
 
       // Add each of them to the lookup.
-      for (let i = originalLength; i < newLength; i++) {
-        let intermediate = this.matches[i][1].split('.');
+      for (let i = originalLength; i < newLength; i += 3) {
+        let intermediate = newMatches[i + 1].split('.');
         let qualifiedAliasRoute = intermediate.join('/');
         let qualifiedTargetRoute = qualifiedAliasRoute.replace(currentIntercepting.aliasRoute, currentIntercepting.aliasTarget);
 
