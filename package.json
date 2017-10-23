@@ -1,6 +1,6 @@
 {
   "name": "ember-route-alias",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Ember addon to create multiple paths for the same route.",
   "keywords": [
     "ember-addon",
