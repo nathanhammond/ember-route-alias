@@ -65,7 +65,7 @@ The included sample application contains complete usage examples.
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 * Also available via GitHub Pages [http://nathanhammond.github.io/ember-route-alias/](http://nathanhammond.github.io/ember-route-alias/)
 
-## Running Tests
+### Running tests
 
 * `npm run test`
 
