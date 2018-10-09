@@ -12,18 +12,18 @@ test('Adds a module name lookup pattern.', function(assert) {
   let subject = Resolver.extend(RouteAliasResolver).create();
   let subjectLength = subject.get('moduleNameLookupPatterns').length;
 
-  assert.equal(baseLength + 1, subjectLength, 'Successfully added a module name lookup pattern.');
+  assert.equal(baseLength + 2, subjectLength, 'Successfully added two module name lookup patterns.');
 });
 
 test('The module name lookup works.', function(assert) {
   let result;
   let subject = Resolver.extend(RouteAliasResolver).create();
 
-  assert.equal(subject.aliasedModuleName(), false, 'Returns falsy with no namespace.');
+  assert.equal(subject.aliasedMainModuleName(), false, 'Returns falsy with no namespace.');
 
   subject.namespace = {};
 
-  assert.equal(subject.aliasedModuleName(), false, 'Returns falsy with no lookup.');
+  assert.equal(subject.aliasedMainModuleName(), false, 'Returns falsy with no lookup.');
 
   subject.namespace._routeAliasLookup = {
     'alias-one': 'one',
@@ -32,7 +32,7 @@ test('The module name lookup works.', function(assert) {
     'not-one': 'alias-one',
   };
 
-  result = subject.aliasedModuleName({
+  result = subject.aliasedMainModuleName({
     prefix: 'ember-route-alias',
     type: 'something-else',
     fullNameWithoutType: 'something-else'
@@ -40,7 +40,7 @@ test('The module name lookup works.', function(assert) {
 
   assert.equal(result, false, 'Returns falsy when the lookup is for the wrong type.');
 
-  result = subject.aliasedModuleName({
+  result = subject.aliasedMainModuleName({
     prefix: 'ember-route-alias',
     type: 'template',
     fullNameWithoutType: 'something-else'
@@ -48,7 +48,7 @@ test('The module name lookup works.', function(assert) {
 
   assert.equal(result, false, 'Returns falsy when not found in the lookup.');
 
-  result = subject.aliasedModuleName({
+  result = subject.aliasedMainModuleName({
     prefix: 'ember-route-alias',
     type: 'template',
     fullNameWithoutType: 'alias-one'
@@ -56,7 +56,7 @@ test('The module name lookup works.', function(assert) {
 
   assert.equal(result, 'ember-route-alias/templates/one', 'Succeeds at simple lookups.');
 
-  result = subject.aliasedModuleName({
+  result = subject.aliasedMainModuleName({
     prefix: 'ember-route-alias',
     type: 'template',
     fullNameWithoutType: 'not-one'
@@ -64,7 +64,7 @@ test('The module name lookup works.', function(assert) {
 
   assert.equal(result, 'ember-route-alias/templates/one', 'Succeeds at "recursive" lookups, alias to alias.');
 
-  result = subject.aliasedModuleName({
+  result = subject.aliasedMainModuleName({
     prefix: 'ember-route-alias',
     type: 'template',
     fullNameWithoutType: 'alias-one/alias-a'
@@ -74,3 +74,41 @@ test('The module name lookup works.', function(assert) {
 
 });
 
+test('The module name lookup works with a pod-based architecture.', function(assert) {
+  let result;
+  let subject = Resolver.extend(RouteAliasResolver).create();
+
+  subject.namespace = {};
+
+  subject.namespace._routeAliasLookup = {
+    'alias-one': 'one',
+    'alias-one/a': 'one/a',
+    'alias-one/alias-a': 'alias-one/a',
+    'not-one': 'alias-one',
+  };
+
+  result = subject.aliasedPodBasedModuleName({
+    prefix: 'ember-route-alias',
+    type: 'template',
+    fullNameWithoutType: 'alias-one'
+  });
+
+  assert.equal(result, 'ember-route-alias/one/template', 'Succeeds at simple lookups.');
+
+  result = subject.aliasedPodBasedModuleName({
+    prefix: 'ember-route-alias',
+    type: 'template',
+    fullNameWithoutType: 'not-one'
+  });
+
+  assert.equal(result, 'ember-route-alias/one/template', 'Succeeds at "recursive" lookups, alias to alias.');
+
+  result = subject.aliasedPodBasedModuleName({
+    prefix: 'ember-route-alias',
+    type: 'template',
+    fullNameWithoutType: 'alias-one/alias-a'
+  });
+
+  assert.equal(result, 'ember-route-alias/one/a/template', 'Succeeds at "recursive" lookups.');
+
+});
