@@ -8,6 +8,7 @@ change that is not instance specific.
 Ember.Route.reopen({
   setupController(controller) {
     this._super.apply(this, arguments);
+    if (!controller || !('set' in controller)) return;
     controller.set('contextRoute', this.routeName);
   }
 });
